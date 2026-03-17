@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const plans = [
+  {
+    name: 'Free',
+    price: '$0',
+    period: 'forever',
+    description: 'Perfect for getting started',
+    features: [
+      '1 SaaS store',
+      'Up to 50 products',
+      '500MB storage',
+      'Crypto payments',
+      'Built-in Buyer Protection',
+      'Community support',
+    ],
+    cta: 'Get Started',
+    ctaHref: 'https://app.mobazha.org',
+    highlighted: false,
+  },
+  {
+    name: 'Starter',
+    price: '$9.99',
+    period: '/month',
+    description: 'For growing sellers',
+    features: [
+      'Unlimited products',
+      '5GB storage',
+      'Image CDN',
+      '+ Stripe fiat payments',
+      '1 custom domain',
+      'Enhanced analytics',
+      'AI product descriptions',
+      'Email support',
+    ],
+    cta: 'Coming Q3 2026',
+    ctaHref: '#',
+    highlighted: false,
+    comingSoon: true,
+  },
+  {
+    name: 'Pro',
+    price: '$29.99',
+    period: '/month',
+    description: 'For serious sellers',
+    features: [
+      'Up to 3 SaaS stores',
+      '25GB storage',
+      '+ PayPal payments',
+      '3 custom domains',
+      'Standalone store deployment',
+      'Telegram Mini App (Deep Link)',
+      'Advanced analytics',
+      'AI Store Builder',
+      'Priority support',
+    ],
+    cta: 'Coming Q3 2026',
+    ctaHref: '#',
+    highlighted: true,
+    comingSoon: true,
+  },
+  {
+    name: 'Enterprise',
+    price: 'Custom',
+    period: '',
+    description: 'For large operations',
+    features: [
+      'Unlimited stores',
+      '100GB+ storage',
+      'All payment channels',
+      'Unlimited custom domains',
+      'Branded Telegram Bot',
+      'Dedicated CDN',
+      'AI Customer Service',
+      'Custom SLA',
+      'Dedicated support',
+    ],
+    cta: 'Contact Us',
+    ctaHref: 'mailto:hello@mobazha.org',
+    highlighted: false,
+    comingSoon: true,
+  },
+];
+---
+
+<Layout title="Pricing - Mobazha" description="Simple, transparent pricing. All features free during Beta.">
+  <Header />
+  <main class="pt-32 pb-20">
+    <!-- Beta Banner -->
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-brand)]/5 p-6 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full bg-[var(--color-brand)]/10 px-4 py-1.5">
+          <span class="h-2 w-2 animate-pulse rounded-full bg-[var(--color-brand-light)]"></span>
+          <span class="text-sm font-semibold text-[var(--color-brand-light)]">Beta</span>
+        </div>
+        <h2 class="mt-3 text-2xl font-bold text-[var(--color-text-primary)]">
+          All features FREE during Beta
+        </h2>
+        <p class="mt-2 text-[var(--color-text-body)]">
+          No credit card required. No limits. Build your store today.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section header -->
+    <div class="mx-auto mt-16 max-w-3xl px-6 text-center lg:px-8">
+      <h1 class="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
+        Simple, transparent pricing
+      </h1>
+      <p class="mt-4 text-lg text-[var(--color-text-body)]">
+        Zero commissions on every plan. Choose the tools that match your ambition.
+      </p>
+    </div>
+
+    <!-- Plan cards -->
+    <div class="mx-auto mt-16 grid max-w-7xl gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+      {plans.map(plan => (
+        <div class:list={[
+          'relative flex flex-col rounded-2xl border p-6',
+          plan.highlighted
+            ? 'border-[var(--color-brand)]/40 bg-[var(--color-bg-surface)] shadow-lg shadow-[var(--color-glow)]'
+            : 'border-white/5 bg-[var(--color-bg-surface)]',
+        ]}>
+          {plan.highlighted && (
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] px-3 py-0.5 text-xs font-semibold text-white">
+              Most Popular
+            </div>
+          )}
+          <div>
+            <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{plan.name}</h3>
+            <p class="mt-1 text-sm text-[var(--color-text-muted)]">{plan.description}</p>
+          </div>
+          <div class="mt-4">
+            <span class="text-3xl font-bold text-[var(--color-text-primary)]">{plan.price}</span>
+            <span class="text-sm text-[var(--color-text-muted)]">{plan.period}</span>
+          </div>
+          <ul class="mt-6 flex-1 space-y-3">
+            {plan.features.map(f => (
+              <li class="flex items-start gap-2 text-sm text-[var(--color-text-body)]">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={plan.ctaHref}
+            class:list={[
+              'mt-6 block rounded-lg py-2.5 text-center text-sm font-semibold transition-colors',
+              plan.highlighted
+                ? 'bg-[var(--color-cta)] text-white hover:bg-[var(--color-cta-hover)]'
+                : plan.comingSoon
+                  ? 'border border-white/10 text-[var(--color-text-muted)] cursor-default'
+                  : 'border border-white/10 text-[var(--color-text-primary)] hover:bg-white/5',
+            ]}
+          >
+            {plan.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Founding Seller -->
+    <div class="mx-auto mt-16 max-w-3xl px-6 lg:px-8">
+      <div class="rounded-2xl border border-[var(--color-cta)]/20 bg-[var(--color-cta)]/5 p-8 text-center">
+        <div class="text-4xl">&#127873;</div>
+        <h3 class="mt-3 text-xl font-bold text-[var(--color-text-primary)]">
+          Founding Seller Program
+        </h3>
+        <p class="mt-2 text-[var(--color-text-body)]">
+          First 100 sellers who set up a store get <strong class="text-[var(--color-text-primary)]">Founding Seller</strong> status
+          with permanent Pro discount when pricing launches.
+        </p>
+        <ul class="mt-4 inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[var(--color-text-body)]">
+          <li class="flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Permanent Pro discount
+          </li>
+          <li class="flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Priority standalone support
+          </li>
+          <li class="flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[var(--color-cta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Founding Seller badge
+          </li>
+        </ul>
+        <a
+          href="https://app.mobazha.org"
+          class="mt-6 inline-flex items-center gap-2 rounded-xl bg-[var(--color-cta)] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-cta-hover)]"
+        >
+          Claim Your Spot
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Fine Print -->
+    <div class="mx-auto mt-12 max-w-2xl px-6 text-center lg:px-8">
+      <p class="text-xs text-[var(--color-text-muted)]">
+        Pricing will be announced at least 30 days before taking effect.
+        Your data is always exportable. Zero commissions on every plan, always.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>

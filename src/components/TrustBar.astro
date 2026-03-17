@@ -1,0 +1,21 @@
+---
+const items = [
+  { icon: '0%', label: 'Zero Fees' },
+  { icon: '\u{1F6E1}', label: 'Buyer Protection' },
+  { icon: '\u{26D3}', label: '6 Chains + Stripe/PayPal' },
+  { icon: '\u{1F512}', label: 'Your Data, Your Control' },
+];
+---
+
+<section class="border-y border-white/5 bg-[var(--color-bg-surface)]/50">
+  <div class="mx-auto max-w-7xl px-6 py-5 lg:px-8">
+    <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+      {items.map(item => (
+        <div class="flex items-center gap-2.5 text-sm text-[var(--color-text-muted)]">
+          <span class="text-base">{item.icon}</span>
+          <span>{item.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
