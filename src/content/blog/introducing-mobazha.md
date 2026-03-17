@@ -37,4 +37,4 @@ The first 100 sellers who set up a store get Founding Seller status with permane
 
 ---
 
-*Mobazha is open source. Follow our development on [GitHub](https://github.com/mobazha).*
+*Follow our development on [GitHub](https://github.com/mobazha).*
