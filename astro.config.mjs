@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://mobazha.org',
 
@@ -17,4 +19,5 @@ export default defineConfig({
 
   compressHTML: true,
   integrations: [sitemap()],
+  adapter: cloudflare(),
 });
