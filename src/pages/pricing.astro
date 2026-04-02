@@ -7,7 +7,7 @@ const plans = [
   {
     name: 'Free',
     price: '$0',
-    period: 'forever',
+    period: '/month',
     description: 'Perfect for getting started',
     features: [
       '1 SaaS store',
@@ -52,7 +52,6 @@ const plans = [
       '25GB storage',
       '+ PayPal payments',
       '3 custom domains',
-      'Standalone store deployment',
       'Telegram Mini App (Deep Link)',
       'Advanced analytics',
       'AI Store Builder',
@@ -166,6 +165,61 @@ const plans = [
       ))}
     </div>
 
+    <!-- Self-Hosted -->
+    <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
+      <div class="rounded-2xl border border-white/10 bg-[var(--color-bg-surface)] p-8 sm:p-10">
+        <div class="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex-1">
+            <div class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-[var(--color-text-muted)]">
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" /></svg>
+              Self-Hosted
+            </div>
+            <h3 class="mt-3 text-2xl font-bold text-[var(--color-text-primary)]">
+              Run on your own server
+            </h3>
+            <p class="mt-2 max-w-xl text-[var(--color-text-body)]">
+              Full control over your data. Deploy with Docker in minutes. Automatic updates included.
+            </p>
+            <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--color-text-body)]">
+              <li class="flex items-center gap-1.5">
+                <svg class="h-4 w-4 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Docker one-click deploy
+              </li>
+              <li class="flex items-center gap-1.5">
+                <svg class="h-4 w-4 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Custom domain
+              </li>
+              <li class="flex items-center gap-1.5">
+                <svg class="h-4 w-4 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                All crypto payments
+              </li>
+              <li class="flex items-center gap-1.5">
+                <svg class="h-4 w-4 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Buyer Protection
+              </li>
+              <li class="flex items-center gap-1.5">
+                <svg class="h-4 w-4 text-[var(--color-brand-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Auto-updates
+              </li>
+            </ul>
+          </div>
+          <div class="flex flex-col items-center gap-3 sm:items-end">
+            <div class="text-center sm:text-right">
+              <span class="text-3xl font-bold text-[var(--color-text-primary)]">Free</span>
+              <span class="ml-1 text-sm text-[var(--color-text-muted)]">during Beta</span>
+            </div>
+            <a
+              href="https://app.mobazha.org/deploy"
+              class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-brand)]/40 bg-[var(--color-brand)]/10 px-6 py-3 text-sm font-semibold text-[var(--color-brand-light)] transition-colors hover:bg-[var(--color-brand)]/20"
+            >
+              Deploy Now
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Founding Seller -->
     <div class="mx-auto mt-16 max-w-3xl px-6 lg:px-8">
       <div class="rounded-2xl border border-[var(--color-cta)]/20 bg-[var(--color-cta)]/5 p-8 text-center">
@@ -205,7 +259,7 @@ const plans = [
     <div class="mx-auto mt-12 max-w-2xl px-6 text-center lg:px-8">
       <p class="text-xs text-[var(--color-text-muted)]">
         Pricing will be announced at least 30 days before taking effect.
-        Your data is always exportable. Zero commissions on every plan, always.
+        Your data is always exportable. Zero commissions on every plan.
       </p>
     </div>
   </main>

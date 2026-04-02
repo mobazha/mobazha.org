@@ -21,7 +21,7 @@ We believe sellers deserve better.
 - **Accept payments** via 6 blockchains (ETH, BNB, SOL, BTC, LTC, ZEC) plus Stripe and PayPal
 - **Built-in buyer protection** through smart contract escrow on every order
 - **Sell in Telegram** — your store as a Mini App, reaching customers where they already are
-- **Keep 100%** of your revenue — zero commissions, forever
+- **Keep 100%** of your revenue — zero commissions
 
 ## What's coming
 
