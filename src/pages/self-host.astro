@@ -49,16 +49,12 @@ const faqs = [
     a: '2 CPU cores, 2 GB RAM, 20 GB SSD storage, running Ubuntu 22.04+ or Debian 12+. These specs work for both cloud VPS and home servers.',
   },
   {
-    q: 'Do I need a public IP address?',
-    a: 'Not necessarily. A public IP lets customers visit your store URL directly. Without one (e.g. home server behind NAT), your store is still fully accessible through the <strong>Mobazha marketplace</strong> and <strong>Telegram Mini App</strong> via built-in P2P relay. Optionally, add <code>--overlay tor</code> or <code>--overlay lokinet</code> to get a direct .onion/.loki address that works from anywhere.',
+    q: 'Do I need a public IP or domain name?',
+    a: 'No. Your store automatically connects to the Mobazha network, so buyers can find you through the marketplace and Telegram. A domain is optional — you can add one later for a custom store URL.',
   },
   {
-    q: 'Do I need a domain name?',
-    a: 'No. By default, your store runs on your server\'s IP address with a self-signed TLS certificate. You can add a domain later in Admin Settings for automatic Let\'s Encrypt TLS.',
-  },
-  {
-    q: 'Can I run this on a home server behind NAT?',
-    a: 'Yes — it works out of the box. Your node connects to the Mobazha network via P2P, so buyers can find and shop at your store through the marketplace and Telegram Mini App without any port forwarding. For a <strong>direct public URL</strong>, add <code>--overlay tor</code> or <code>--overlay lokinet</code> to get a .onion/.loki address that anyone can visit in a browser. You can enable overlay networks later from <strong>Admin &rarr; System &rarr; Network</strong>.',
+    q: 'Can I run this at home instead of a VPS?',
+    a: 'Yes — just install and it works, even without a static IP. Buyers reach your store through the Mobazha marketplace. Want a shareable link too? Add <code>--overlay tor</code> or <code>--overlay lokinet</code> for a direct address, or turn it on later from <strong>Admin &rarr; System &rarr; Network</strong>.',
   },
   {
     q: 'How do backups work?',
