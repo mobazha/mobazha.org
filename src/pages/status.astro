@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Status - Mobazha"
+  description="Mobazha service status and how to reach us for urgent issues."
+>
+  <Header />
+  <main class="pt-32 pb-20">
+    <div class="mx-auto max-w-2xl px-6 lg:px-8">
+      <h1 class="text-4xl font-bold tracking-tight text-[var(--color-text-primary)]">Service status</h1>
+      <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-body)]">
+        We are preparing a public status page with uptime and incident history. It will live at
+        <span class="whitespace-nowrap font-medium text-[var(--color-text-primary)]">status.mobazha.org</span>
+        when ready.
+      </p>
+      <p class="mt-4 text-lg leading-relaxed text-[var(--color-text-body)]">
+        If something looks wrong right now, reach out via
+        <a
+          href="https://t.me/MobazhaHQ"
+          class="font-medium text-[var(--color-brand-light)] underline decoration-white/20 underline-offset-2 transition-colors hover:text-[var(--color-brand)] hover:decoration-[var(--color-brand)]/50"
+          >Telegram</a
+        >
+        or
+        <a
+          href="https://discord.gg/3KCPBYxXgb"
+          class="font-medium text-[var(--color-brand-light)] underline decoration-white/20 underline-offset-2 transition-colors hover:text-[var(--color-brand)] hover:decoration-[var(--color-brand)]/50"
+          >Discord</a
+        >
+        and we will help.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
