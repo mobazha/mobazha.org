@@ -4,9 +4,12 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+const now = new Date();
+const isProd = import.meta.env.PROD;
+
+const posts = (await getCollection('blog'))
+  .filter(post => !isProd || new Date(post.data.date) <= now)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
 <Layout title="Blog - Mobazha" description="Latest news, updates, and stories from the Mobazha team.">
@@ -37,13 +40,23 @@ const posts = (await getCollection('blog')).sort(
           {posts.map(post => (
             <a
               href={`/blog/${post.id}`}
-              class="block rounded-2xl border border-white/5 bg-[var(--color-bg-surface)] p-6 transition-all hover:border-[var(--color-brand)]/20 hover:shadow-lg hover:shadow-[var(--color-glow)]"
+              class="block overflow-hidden rounded-2xl border border-white/5 bg-[var(--color-bg-surface)] transition-all hover:border-[var(--color-brand)]/20 hover:shadow-lg hover:shadow-[var(--color-glow)]"
             >
-              <time class="text-xs font-medium text-[var(--color-text-muted)]">
-                {new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-              </time>
-              <h2 class="mt-2 text-xl font-semibold text-[var(--color-text-primary)]">{post.data.title}</h2>
-              <p class="mt-2 text-sm text-[var(--color-text-body)]">{post.data.description}</p>
+              {post.data.image && (
+                <img
+                  src={post.data.image}
+                  alt=""
+                  class="w-full aspect-[2/1] object-cover border-b border-white/5"
+                  loading="lazy"
+                />
+              )}
+              <div class="p-6">
+                <time class="text-xs font-medium text-[var(--color-text-muted)]">
+                  {new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                <h2 class="mt-2 text-xl font-semibold text-[var(--color-text-primary)]">{post.data.title}</h2>
+                <p class="mt-2 text-sm text-[var(--color-text-body)]">{post.data.description}</p>
+              </div>
             </a>
           ))}
         </div>

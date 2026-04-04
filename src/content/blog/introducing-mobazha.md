@@ -3,6 +3,7 @@ title: "Introducing Mobazha: Decentralized Commerce for Independent Sellers"
 description: "We're building the marketplace you actually want to use — zero commissions, built-in buyer protection, and complete data ownership."
 date: "2026-03-17"
 author: "Mobazha Team"
+image: "/blog/introducing-mobazha.svg"
 ---
 
 Today, we're launching Mobazha in Open Beta.

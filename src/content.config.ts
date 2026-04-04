@@ -8,6 +8,7 @@ const blog = defineCollection({
     description: z.string(),
     date: z.string(),
     author: z.string().default('Mobazha Team'),
+    image: z.string().optional(),
   }),
 });
 
