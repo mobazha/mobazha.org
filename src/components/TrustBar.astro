@@ -1,8 +1,18 @@
 ---
-const items = [
-  { icon: '0%', label: 'Zero Commission' },
+type Item = {
+  icon: string;
+  label: string;
+  labelShort?: string;
+};
+
+const items: Item[] = [
+  { icon: '0%', label: 'Commission' },
   { icon: '\u{1F6E1}', label: 'Buyer Protection' },
-  { icon: '\u{26D3}', label: 'USDT & USDC (multi-chain, incl. TRON) + Stripe/PayPal' },
+  {
+    icon: '\u{26D3}',
+    label: 'USDT & USDC (multi-chain, incl. TRON) + Stripe/PayPal',
+    labelShort: 'USDT/USDC · multi-chain + Stripe/PayPal',
+  },
   { icon: '\u{1F512}', label: 'Your Data, Your Control' },
 ];
 ---
@@ -11,9 +21,18 @@ const items = [
   <div class="mx-auto max-w-7xl px-6 py-5 lg:px-8">
     <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
       {items.map(item => (
-        <div class="flex items-center gap-2.5 text-sm text-[var(--color-text-muted)]">
-          <span class="text-base">{item.icon}</span>
-          <span>{item.label}</span>
+        <div class="flex max-w-[min(100%,22rem)] items-center gap-2.5 text-sm text-[var(--color-text-muted)] sm:max-w-none">
+          <span class="shrink-0 text-base">{item.icon}</span>
+          <span class="min-w-0 text-left leading-snug">
+            {item.labelShort ? (
+              <>
+                <span class="sm:hidden">{item.labelShort}</span>
+                <span class="hidden sm:inline">{item.label}</span>
+              </>
+            ) : (
+              item.label
+            )}
+          </span>
         </div>
       ))}
     </div>
