@@ -38,7 +38,7 @@ One command. Two minutes. Your store is running on your hardware, under your con
 **What's included:**
 
 - Full store with product management, orders, payments, and encrypted chat
-- Crypto (6 chains) + Stripe + PayPal payments out of the box
+- USDT & USDC (multi-chain, incl. TRON) + other native assets + Stripe + PayPal out of the box
 - Smart contract buyer protection on every crypto transaction
 - Automatic Docker updates — stay current without manual intervention
 - Optional Tor or Lokinet privacy overlay for censorship-resistant access
