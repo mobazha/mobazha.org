@@ -10,6 +10,13 @@ const vpsProviders = [
   { name: 'Contabo', spec: '4 vCPU / 8 GB / 50 GB SSD', price: '~€6/mo', href: 'https://contabo.com/en/vps/' },
 ];
 
+const nativePlatforms = [
+  { os: 'Linux x86_64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Ubuntu, Debian, CentOS, etc.' },
+  { os: 'Linux ARM64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Raspberry Pi 4+, ARM VPS' },
+  { os: 'macOS', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Apple Silicon & Intel' },
+  { os: 'Windows', cmd: 'Download from GitHub Releases', note: 'x86_64, run mobazha.exe start', href: 'https://github.com/mobazha/mobazha3.0/releases' },
+];
+
 const features = [
   {
     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>`,
@@ -32,9 +39,9 @@ const features = [
     description: 'USDT & USDC across multiple chains (including TRON), plus other native assets, Stripe and PayPal.',
   },
   {
-    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
-    title: 'Auto Updates',
-    description: 'Docker-based with automatic image updates. Stay current effortlessly.',
+    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" /></svg>`,
+    title: 'Run Anywhere',
+    description: 'Native binary for Linux, macOS, Windows, and ARM. Or use Docker. No dependencies required.',
   },
   {
     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>`,
@@ -46,7 +53,11 @@ const features = [
 const faqs = [
   {
     q: 'What are the minimum server requirements?',
-    a: '2 CPU cores, 2 GB RAM, 20 GB SSD storage, running Ubuntu 22.04+ or Debian 12+. These specs work for both cloud VPS and home servers.',
+    a: '2 CPU cores, 2 GB RAM, 20 GB SSD storage. Native binary works on Linux (x86_64/ARM64), macOS, and Windows. Docker option requires Ubuntu 22.04+ or Debian 12+.',
+  },
+  {
+    q: 'Should I use the native binary or Docker?',
+    a: '<strong>Native binary</strong> — simplest option, single executable, no dependencies. Best for most users, home servers, ARM devices (Raspberry Pi), macOS, and Windows.<br/><strong>Docker</strong> — includes automatic updates via systemd timer and is battle-tested for Linux VPS deployments. Best if you already use Docker.',
   },
   {
     q: 'Do I need a public IP or domain name?',
@@ -58,7 +69,7 @@ const faqs = [
   },
   {
     q: 'How do backups work?',
-    a: 'All store data lives in a single Docker volume. Use standard tools (rsync, restic, etc.) to back up <code>/opt/mobazha/data</code>.',
+    a: 'Run <code>mobazha backup</code> to create a compressed archive of your store data. For Docker, use standard tools (rsync, restic, etc.) to back up <code>/opt/mobazha/data</code>.',
   },
   {
     q: 'Can I migrate to/from SaaS later?',
@@ -98,26 +109,90 @@ const faqs = [
       </div>
     </div>
 
-    <!-- Install Command -->
+    <!-- Install Methods Tabs -->
     <div class="mx-auto mt-14 max-w-3xl px-6 lg:px-8">
-      <div class="rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-bg-surface)] p-1">
-        <div class="flex items-center gap-3 rounded-xl bg-[var(--color-bg-base)] px-5 py-4 font-mono text-sm">
-          <span class="select-none text-[var(--color-text-muted)]">$</span>
-          <code class="flex-1 text-[var(--color-brand-light)] break-all">curl -sSL https://get.mobazha.org/standalone | sudo bash</code>
-          <button
-            id="copy-cmd"
-            class="shrink-0 rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]"
-            aria-label="Copy command"
-          >
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
-            </svg>
-          </button>
+      <!-- Tab buttons -->
+      <div class="flex justify-center gap-2 mb-6">
+        <button
+          id="tab-native"
+          class="install-tab rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors bg-[var(--color-brand)]/10 text-[var(--color-brand-light)] border border-[var(--color-brand)]/30"
+          data-tab="native"
+        >
+          <span class="inline-flex items-center gap-1.5">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" /></svg>
+            Native Binary
+          </span>
+        </button>
+        <button
+          id="tab-docker"
+          class="install-tab rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors text-[var(--color-text-muted)] border border-white/10 hover:bg-white/5"
+          data-tab="docker"
+        >
+          <span class="inline-flex items-center gap-1.5">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" /></svg>
+            Docker
+          </span>
+        </button>
+      </div>
+
+      <!-- Native panel -->
+      <div id="panel-native" class="install-panel">
+        <div class="rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-bg-surface)] p-1">
+          <div class="flex items-center gap-3 rounded-xl bg-[var(--color-bg-base)] px-5 py-4 font-mono text-sm">
+            <span class="select-none text-[var(--color-text-muted)]">$</span>
+            <code id="native-cmd" class="flex-1 text-[var(--color-brand-light)] break-all">curl -sSL https://get.mobazha.org/install | bash</code>
+            <button class="copy-btn shrink-0 rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]" data-cmd="curl -sSL https://get.mobazha.org/install | bash" aria-label="Copy command">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" /></svg>
+            </button>
+          </div>
+        </div>
+        <p class="mt-3 text-center text-sm text-[var(--color-text-muted)]">
+          Single binary, zero dependencies. Works on Linux (x86_64 &amp; ARM64), macOS (Apple Silicon &amp; Intel), and Windows.
+        </p>
+        <!-- Platform table -->
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-white/10">
+                <th class="pb-3 pr-6 font-medium text-[var(--color-text-muted)]">Platform</th>
+                <th class="pb-3 pr-6 font-medium text-[var(--color-text-muted)]">Install</th>
+                <th class="pb-3 font-medium text-[var(--color-text-muted)]">Note</th>
+              </tr>
+            </thead>
+            <tbody class="text-[var(--color-text-body)]">
+              {nativePlatforms.map(p => (
+                <tr class="border-b border-white/5">
+                  <td class="py-3 pr-6 font-medium text-[var(--color-text-primary)] whitespace-nowrap">{p.os}</td>
+                  <td class="py-3 pr-6 font-mono text-xs text-[var(--color-brand-light)]">
+                    {p.href ? (
+                      <a href={p.href} target="_blank" rel="noopener noreferrer" class="hover:underline">{p.cmd}</a>
+                    ) : (
+                      <span>{p.cmd}</span>
+                    )}
+                  </td>
+                  <td class="py-3 text-xs text-[var(--color-text-muted)]">{p.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-      <p class="mt-3 text-center text-sm text-[var(--color-text-muted)]">
-        Works on Ubuntu 22.04+, Debian 12+. Installs Docker automatically if needed.
-      </p>
+
+      <!-- Docker panel -->
+      <div id="panel-docker" class="install-panel hidden">
+        <div class="rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-bg-surface)] p-1">
+          <div class="flex items-center gap-3 rounded-xl bg-[var(--color-bg-base)] px-5 py-4 font-mono text-sm">
+            <span class="select-none text-[var(--color-text-muted)]">$</span>
+            <code id="docker-cmd" class="flex-1 text-[var(--color-brand-light)] break-all">curl -sSL https://get.mobazha.org/standalone | sudo bash</code>
+            <button class="copy-btn shrink-0 rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]" data-cmd="curl -sSL https://get.mobazha.org/standalone | sudo bash" aria-label="Copy command">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" /></svg>
+            </button>
+          </div>
+        </div>
+        <p class="mt-3 text-center text-sm text-[var(--color-text-muted)]">
+          Docker-based with automatic updates. Works on Ubuntu 22.04+, Debian 12+.
+        </p>
+      </div>
     </div>
 
     <!-- What happens -->
@@ -130,7 +205,8 @@ const faqs = [
           <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-brand)]/10 text-lg font-bold text-[var(--color-brand-light)]">1</div>
           <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">Install</h3>
           <p class="mt-2 text-sm text-[var(--color-text-muted)]">
-            Docker is installed (if needed), images are pulled, and your store starts automatically.
+            A single binary is downloaded to your machine. No Docker, no runtime dependencies.
+            With the Docker method, images are pulled and services start automatically.
           </p>
         </div>
         <div class="relative rounded-2xl border border-white/5 bg-[var(--color-bg-surface)] p-6">
@@ -157,7 +233,22 @@ const faqs = [
           Advanced install options
           <svg class="h-5 w-5 text-[var(--color-text-muted)] transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
         </summary>
-        <div class="border-t border-white/5 px-6 py-5 space-y-4 text-sm text-[var(--color-text-body)]">
+        <div class="border-t border-white/5 px-6 py-5 space-y-5 text-sm text-[var(--color-text-body)]">
+          <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">Native binary</p>
+          <div>
+            <p class="font-medium text-[var(--color-text-primary)]">Start with a domain (auto-TLS via Let&rsquo;s Encrypt):</p>
+            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">mobazha start --domain shop.example.com</code>
+          </div>
+          <div>
+            <p class="font-medium text-[var(--color-text-primary)]">Install as a system service (Linux systemd / macOS launchd):</p>
+            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">sudo mobazha setup-service install</code>
+          </div>
+          <div>
+            <p class="font-medium text-[var(--color-text-primary)]">Back up your store data:</p>
+            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">mobazha backup -o ~/mobazha-backup.tar.gz</code>
+          </div>
+          <hr class="border-white/5"/>
+          <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">Docker</p>
           <div>
             <p class="font-medium text-[var(--color-text-primary)]">Pre-configure a domain (auto-TLS via Let&rsquo;s Encrypt):</p>
             <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">curl -sSL https://get.mobazha.org/standalone | sudo bash -s -- --domain shop.example.com</code>
@@ -165,14 +256,6 @@ const faqs = [
           <div>
             <p class="font-medium text-[var(--color-text-primary)]">Privacy mode with Tor:</p>
             <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">curl -sSL https://get.mobazha.org/standalone | sudo bash -s -- --overlay tor</code>
-          </div>
-          <div>
-            <p class="font-medium text-[var(--color-text-primary)]">Privacy mode with Lokinet:</p>
-            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">curl -sSL https://get.mobazha.org/standalone | sudo bash -s -- --overlay lokinet</code>
-          </div>
-          <div>
-            <p class="font-medium text-[var(--color-text-primary)]">Combine options:</p>
-            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">curl ... | sudo bash -s -- --domain shop.example.com --overlay tor</code>
           </div>
           <p class="text-xs text-[var(--color-text-muted)]">
             You can also enable or switch overlay networks later from <strong>Admin &rarr; System &rarr; Network</strong> without re-installing.
@@ -205,9 +288,9 @@ const faqs = [
         Where to run your store
       </h2>
       <p class="mt-3 text-center text-[var(--color-text-body)]">
-        A cloud VPS is the easiest option — any provider with 2+ CPU cores and 2 GB+ RAM works.
-        You can also run on a home server behind NAT — your store stays reachable
-        via the Mobazha network, with optional Tor/Lokinet for a direct public address.
+        Run locally on your Mac, Windows PC, or Raspberry Pi — or deploy to a cloud VPS.
+        Any machine with 2+ CPU cores and 2 GB+ RAM works.
+        Behind NAT? Your store stays reachable via the Mobazha network.
       </p>
       <div class="mt-8 overflow-x-auto">
         <table class="w-full text-left text-sm">
@@ -286,20 +369,39 @@ const faqs = [
 </Layout>
 
 <script>
-  const btn = document.getElementById('copy-cmd');
-  btn?.addEventListener('click', async () => {
-    const cmd = 'curl -sSL https://get.mobazha.org/standalone | sudo bash';
-    try {
-      await navigator.clipboard.writeText(cmd);
-      const svg = btn.querySelector('svg');
-      if (svg) {
-        const original = svg.outerHTML;
-        svg.outerHTML = '<svg class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>';
-        setTimeout(() => {
-          const check = btn.querySelector('svg');
-          if (check) check.outerHTML = original;
-        }, 2000);
-      }
-    } catch {}
+  // Tab switching
+  document.querySelectorAll('.install-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.install-tab').forEach(t => {
+        t.classList.remove('bg-[var(--color-brand)]/10', 'text-[var(--color-brand-light)]', 'border-[var(--color-brand)]/30');
+        t.classList.add('text-[var(--color-text-muted)]', 'border-white/10', 'hover:bg-white/5');
+      });
+      tab.classList.remove('text-[var(--color-text-muted)]', 'border-white/10', 'hover:bg-white/5');
+      tab.classList.add('bg-[var(--color-brand)]/10', 'text-[var(--color-brand-light)]', 'border-[var(--color-brand)]/30');
+      document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`panel-${target}`)?.classList.remove('hidden');
+    });
+  });
+
+  // Copy buttons
+  const checkSvg = '<svg class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>';
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const cmd = btn.dataset.cmd;
+      if (!cmd) return;
+      try {
+        await navigator.clipboard.writeText(cmd);
+        const svg = btn.querySelector('svg');
+        if (svg) {
+          const original = svg.outerHTML;
+          svg.outerHTML = checkSvg;
+          setTimeout(() => {
+            const cur = btn.querySelector('svg');
+            if (cur) cur.outerHTML = original;
+          }, 2000);
+        }
+      } catch {}
+    });
   });
 </script>
