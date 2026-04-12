@@ -247,6 +247,11 @@ const faqs = [
             <p class="font-medium text-[var(--color-text-primary)]">Back up your store data:</p>
             <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">mobazha backup -o ~/mobazha-backup.tar.gz</code>
           </div>
+          <div>
+            <p class="font-medium text-[var(--color-text-primary)]">Uninstall (removes binary &amp; service, keeps data):</p>
+            <code class="mt-1.5 block rounded-lg bg-[var(--color-bg-base)] px-4 py-2.5 font-mono text-xs text-[var(--color-brand-light)]">curl -sSL https://get.mobazha.org/install | bash -s -- --uninstall</code>
+            <p class="mt-1 text-xs text-[var(--color-text-muted)]">Add <code>--purge</code> to also remove data. Run <code>--help</code> for all options.</p>
+          </div>
           <hr class="border-white/5"/>
           <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">Docker</p>
           <div>
