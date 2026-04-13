@@ -13,7 +13,7 @@ const vpsProviders = [
 const nativePlatforms = [
   { os: 'Linux x86_64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Ubuntu, Debian, CentOS, etc.' },
   { os: 'Linux ARM64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Raspberry Pi 4+, ARM VPS' },
-  { os: 'macOS', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Apple Silicon & Intel — or download .dmg below' },
+  { os: 'macOS', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Apple Silicon & Intel' },
   { os: 'Windows', cmd: 'Download .zip below', note: 'x86_64 — extract and double-click mobazha-tray.exe' },
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     q: 'Should I use the native binary or Docker?',
-    a: '<strong>Desktop app</strong> (.dmg / .zip) — best for Mac and Windows users who want a visual experience. System tray icon, auto-opens your browser, zero command line.<br/><strong>Native binary</strong> (CLI) — single executable, no dependencies. Best for Linux servers, ARM devices (Raspberry Pi), and power users.<br/><strong>Docker</strong> — includes automatic updates via systemd timer. Best for Linux VPS if you already use Docker.',
+    a: '<strong>Windows Desktop app</strong> (.zip) — best for Windows users who want a visual experience. System tray icon, auto-opens your browser, zero command line.<br/><strong>Native binary</strong> (CLI) — single executable, no dependencies. Best for Linux, macOS, ARM devices (Raspberry Pi), and power users.<br/><strong>Docker</strong> — includes automatic updates via systemd timer. Best for Linux VPS if you already use Docker.',
   },
   {
     q: 'Do I need a public IP or domain name?',
@@ -150,18 +150,18 @@ const faqs = [
           Single binary, zero dependencies. Works on Linux (x86_64 &amp; ARM64), macOS (Apple Silicon &amp; Intel), and Windows.
         </p>
 
-        <!-- Desktop Downloads -->
+        <!-- Desktop Download (Windows only) -->
         <div class="mt-8 rounded-2xl border border-[var(--color-brand)]/20 bg-[var(--color-bg-surface)] p-6 text-center">
-          <h3 class="text-lg font-semibold text-[var(--color-text-primary)] mb-1">Desktop App</h3>
+          <h3 class="text-lg font-semibold text-[var(--color-text-primary)] mb-1">Windows Desktop App</h3>
           <p class="text-sm text-[var(--color-text-muted)] mb-5">
-            No command line needed. Download, install, and your store opens automatically.
+            No command line needed. Download, extract, and your store opens automatically.
           </p>
           <a
             href="/download"
             class="inline-flex items-center gap-2 rounded-xl bg-[var(--color-brand)]/10 border border-[var(--color-brand)]/30 px-6 py-3 text-sm font-semibold text-[var(--color-brand-light)] transition-colors hover:bg-[var(--color-brand)]/20"
           >
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-            Download for macOS &amp; Windows
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+            Download for Windows (.zip)
           </a>
         </div>
         <!-- Platform table -->
