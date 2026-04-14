@@ -13,7 +13,7 @@ const vpsProviders = [
 const nativePlatforms = [
   { os: 'Linux x86_64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Ubuntu, Debian, CentOS, etc.' },
   { os: 'Linux ARM64', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Raspberry Pi 4+, ARM VPS' },
-  { os: 'macOS', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Apple Silicon & Intel' },
+  { os: 'macOS', cmd: 'curl -sSL https://get.mobazha.org/install | bash', note: 'Apple Silicon & Intel — includes desktop tray' },
   { os: 'Windows', cmd: 'Download .zip below', note: 'x86_64 — extract and double-click mobazha-tray.exe' },
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     q: 'Should I use the native binary or Docker?',
-    a: '<strong>Windows Desktop app</strong> (.zip) — best for Windows users who want a visual experience. System tray icon, auto-opens your browser, zero command line.<br/><strong>Native binary</strong> (CLI) — single executable, no dependencies. Best for Linux, macOS, ARM devices (Raspberry Pi), and power users.<br/><strong>Docker</strong> — includes automatic updates via systemd timer. Best for Linux VPS if you already use Docker.',
+    a: '<strong>Desktop tray</strong> — available for macOS and Windows. System tray icon, auto-opens your browser. On macOS, install via the curl command (tray is included automatically). On Windows, download the .zip.<br/><strong>Native binary</strong> (CLI) — single executable, no dependencies. Best for Linux servers, ARM devices (Raspberry Pi), and power users.<br/><strong>Docker</strong> — includes automatic updates via systemd timer. Best for Linux VPS if you already use Docker.',
   },
   {
     q: 'Do I need a public IP or domain name?',

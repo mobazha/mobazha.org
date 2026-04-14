@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const VERSION = 'v0.3.0-beta.14';
+const VERSION = 'v0.3.0-beta.17';
 const TAG = `native-${VERSION}`;
 const BASE = `https://github.com/mobazha/mobazha.org/releases/download/${TAG}`;
 
@@ -49,14 +49,14 @@ const cliPlatforms = [
         </div>
         <p id="detected-label" class="text-sm font-medium text-[var(--color-text-muted)] mb-2">Recommended for your system</p>
 
-        <!-- macOS (CLI) -->
+        <!-- macOS (curl installs CLI + tray) -->
         <div id="dl-mac-arm" class="dl-section">
           <div class="rounded-xl bg-[var(--color-bg-base)] px-5 py-4 font-mono text-sm">
             <span class="select-none text-[var(--color-text-muted)]">$ </span>
             <code class="text-[var(--color-brand-light)]">curl -sSL https://get.mobazha.org/install | bash</code>
           </div>
           <p class="mt-3 text-sm text-[var(--color-text-muted)]">
-            Apple Silicon &amp; Intel. Single binary, starts a local web UI.
+            Apple Silicon &amp; Intel. Installs CLI + desktop tray. Run <code>mobazha-tray</code> for a visual experience.
           </p>
         </div>
 
