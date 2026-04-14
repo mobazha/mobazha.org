@@ -186,7 +186,7 @@ do_install() {
     echo "  ${BINARY_NAME} service install   # Run as background service"
     echo ""
     echo "After starting, open your browser:"
-    echo "  http://localhost:4002"
+    echo "  http://localhost:5102"
     echo ""
     echo "Other commands:"
     echo "  ${BINARY_NAME} service status    # Check service status"
