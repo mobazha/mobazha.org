@@ -15,10 +15,12 @@ INSTALL_DIR="${HOME}/.local/bin"
 BINARY_NAME="mobazha"
 TAG_PREFIX="native-"
 DATA_DIR="${HOME}/.mobazha"
+GATEWAY_PORT="5102"
 
 ACTION="install"
 VERSION=""
 PURGE=false
+AUTO_START=true
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -26,6 +28,7 @@ while [[ $# -gt 0 ]]; do
         --purge)      PURGE=true; shift ;;
         --version)    VERSION="$2"; shift 2 ;;
         --dir)        INSTALL_DIR="$2"; shift 2 ;;
+        --no-start)   AUTO_START=false; shift ;;
         --help|-h)    ACTION="help"; shift ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
@@ -65,6 +68,48 @@ get_latest_version() {
     echo "$tag"
 }
 
+detect_public_ip() {
+    local ip
+    ip="$(curl -fsSL --connect-timeout 3 https://ifconfig.me 2>/dev/null)" && echo "$ip" && return
+    ip="$(curl -fsSL --connect-timeout 3 https://api.ipify.org 2>/dev/null)" && echo "$ip" && return
+    echo "localhost"
+}
+
+ensure_in_path() {
+    if echo "$PATH" | tr ':' '\n' | grep -qx "$INSTALL_DIR"; then
+        return 0
+    fi
+
+    local shell_rc="" path_line='export PATH="$HOME/.local/bin:$PATH"'
+
+    case "$(basename "${SHELL:-/bin/bash}")" in
+        zsh)
+            shell_rc="$HOME/.zshrc"
+            ;;
+        bash)
+            if [ -f "$HOME/.bashrc" ]; then
+                shell_rc="$HOME/.bashrc"
+            elif [ -f "$HOME/.bash_profile" ]; then
+                shell_rc="$HOME/.bash_profile"
+            fi
+            ;;
+        fish)
+            shell_rc="$HOME/.config/fish/config.fish"
+            path_line="fish_add_path $HOME/.local/bin"
+            ;;
+    esac
+
+    if [ -n "$shell_rc" ]; then
+        if ! grep -qF '.local/bin' "$shell_rc" 2>/dev/null; then
+            echo "$path_line" >> "$shell_rc"
+            echo "   Added ${INSTALL_DIR} to PATH in ${shell_rc}"
+        fi
+        export PATH="$INSTALL_DIR:$PATH"
+    else
+        echo "   ⚠️  Add ${INSTALL_DIR} to your PATH manually."
+    fi
+}
+
 do_remove() {
     local target="$1"
     if [ -w "$(dirname "$target")" ]; then
@@ -94,7 +139,8 @@ do_install() {
     tmpdir="$(mktemp -d)"
     trap 'rm -rf "${tmpdir:-}"' EXIT
 
-    echo "⬇️  Downloading ${BINARY_NAME}-${platform}..."
+    # --- Download node binary ---
+    echo "⬇️  Downloading ${BINARY_NAME}..."
     curl -fL# -o "${tmpdir}/${BINARY_NAME}" "$url"
 
     echo "🔐 Verifying checksum..."
@@ -122,78 +168,104 @@ do_install() {
 
     chmod +x "${tmpdir}/${BINARY_NAME}"
 
-    # On macOS, also download the desktop tray binary (system tray icon + auto-open browser)
-    local tray_available=false
-    if [[ "$platform" == darwin-* ]]; then
-        local tray_name="${BINARY_NAME}-tray-${platform}"
-        local tray_url="https://github.com/${REPO}/releases/download/${VERSION}/${tray_name}"
-        echo "⬇️  Downloading desktop tray (${tray_name})..."
-        if curl -fL# -o "${tmpdir}/${BINARY_NAME}-tray" "$tray_url" 2>/dev/null; then
-            chmod +x "${tmpdir}/${BINARY_NAME}-tray"
-            tray_available=true
-        else
-            echo "⚠️  Tray binary not available for this version, skipping."
-        fi
+    # --- Download launcher binary ---
+    local launcher_available=false
+    local launcher_name="${BINARY_NAME}-launcher-${platform}"
+    local launcher_url="https://github.com/${REPO}/releases/download/${VERSION}/${launcher_name}"
+    echo "⬇️  Downloading launcher..."
+    if curl -fL# -o "${tmpdir}/${BINARY_NAME}-launcher" "$launcher_url" 2>/dev/null; then
+        chmod +x "${tmpdir}/${BINARY_NAME}-launcher"
+        launcher_available=true
+    else
+        echo "⚠️  Launcher binary not available for this platform, skipping."
     fi
 
+    # --- Install binaries ---
     mkdir -p "$INSTALL_DIR"
     if [ -w "$INSTALL_DIR" ]; then
         mv "${tmpdir}/${BINARY_NAME}" "${INSTALL_DIR}/${BINARY_NAME}"
-        if $tray_available; then
-            mv "${tmpdir}/${BINARY_NAME}-tray" "${INSTALL_DIR}/${BINARY_NAME}-tray"
+        if $launcher_available; then
+            mv "${tmpdir}/${BINARY_NAME}-launcher" "${INSTALL_DIR}/${BINARY_NAME}-launcher"
         fi
     else
         echo "📦 Installing to ${INSTALL_DIR} (requires sudo)..."
         sudo mv "${tmpdir}/${BINARY_NAME}" "${INSTALL_DIR}/${BINARY_NAME}"
-        if $tray_available; then
-            sudo mv "${tmpdir}/${BINARY_NAME}-tray" "${INSTALL_DIR}/${BINARY_NAME}-tray"
+        if $launcher_available; then
+            sudo mv "${tmpdir}/${BINARY_NAME}-launcher" "${INSTALL_DIR}/${BINARY_NAME}-launcher"
         fi
     fi
 
-    echo ""
-    echo "✅ Mobazha ${VERSION} installed to ${INSTALL_DIR}/${BINARY_NAME}"
-    if $tray_available; then
-        echo "   Desktop tray also installed: ${INSTALL_DIR}/${BINARY_NAME}-tray"
+    # --- macOS: clear quarantine attribute ---
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        xattr -d com.apple.quarantine "${INSTALL_DIR}/${BINARY_NAME}" 2>/dev/null || true
+        if $launcher_available; then
+            xattr -d com.apple.quarantine "${INSTALL_DIR}/${BINARY_NAME}-launcher" 2>/dev/null || true
+        fi
     fi
 
-    # Check if INSTALL_DIR is in PATH; if not, advise the user.
-    if ! echo "$PATH" | tr ':' '\n' | grep -qx "$INSTALL_DIR"; then
-        echo ""
-        echo "⚠️  ${INSTALL_DIR} is not in your PATH."
-        local shell_rc=""
-        case "$(basename "${SHELL:-/bin/bash}")" in
-            zsh)  shell_rc="~/.zshrc" ;;
-            bash) shell_rc="~/.bashrc" ;;
-            fish) shell_rc="~/.config/fish/config.fish" ;;
-            *)    shell_rc="your shell profile" ;;
-        esac
-        echo "   Add it by running:"
-        echo ""
-        echo "     echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ${shell_rc}"
-        echo "     source ${shell_rc}"
-    fi
+    # --- Ensure INSTALL_DIR is in PATH ---
+    ensure_in_path
 
     echo ""
-    if $tray_available; then
-        echo "Quick start (Desktop — recommended for macOS):"
-        echo "  ${BINARY_NAME}-tray              # Launch tray icon, auto-opens browser"
+    echo "📦 Mobazha ${VERSION} installed to ${INSTALL_DIR}/"
+
+    # --- Auto-start service ---
+    if $AUTO_START; then
         echo ""
-        echo "Or use the CLI:"
+        echo "🚀 Starting Mobazha service..."
+        if "${INSTALL_DIR}/${BINARY_NAME}" service install > /dev/null 2>&1; then
+            local public_ip
+            public_ip="$(detect_public_ip)"
+
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            if $launcher_available; then
+                echo "✅ Mobazha is running! (with auto-update)"
+            else
+                echo "✅ Mobazha is running!"
+            fi
+            echo ""
+            echo "   🌐 Your store:  http://${public_ip}:${GATEWAY_PORT}"
+            echo ""
+            echo "   It may take a minute for the first startup."
+            echo "   Open the URL above in your browser to set up your store."
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "Commands:"
+            echo "  mobazha service status    Check service status"
+            echo "  mobazha service stop      Stop the node"
+            echo "  mobazha doctor            System health check"
+            echo "  mobazha backup            Back up data"
+            echo ""
+            echo "Uninstall:"
+            echo "  curl -sSL https://get.mobazha.org/install | bash -s -- --uninstall"
+        else
+            echo "⚠️  Service registration failed. Start manually:"
+            print_manual_start "$launcher_available"
+        fi
     else
-        echo "Quick start:"
+        echo ""
+        print_manual_start "$launcher_available"
     fi
-    echo "  ${BINARY_NAME} start             # Start the node (foreground)"
-    echo "  ${BINARY_NAME} service install   # Run as background service"
+}
+
+print_manual_start() {
+    local launcher_available="${1:-false}"
+
+    if [ "$launcher_available" = "true" ]; then
+        echo "Start your store:"
+        echo "  ${BINARY_NAME}-launcher           # Recommended: with auto-update"
+        echo "  ${BINARY_NAME} service install    # Run as background service"
+    else
+        echo "Start your store:"
+        echo "  ${BINARY_NAME} service install    # Run as background service"
+        echo "  ${BINARY_NAME} start              # Start in foreground"
+    fi
     echo ""
     echo "After starting, open your browser:"
-    echo "  http://localhost:5102"
+    echo "  http://localhost:${GATEWAY_PORT}"
     echo ""
-    echo "Other commands:"
-    echo "  ${BINARY_NAME} service status    # Check service status"
-    echo "  ${BINARY_NAME} doctor            # Check system health"
-    echo "  ${BINARY_NAME} backup            # Back up data"
-    echo ""
-    echo "To uninstall later:"
+    echo "Uninstall:"
     echo "  curl -sSL https://get.mobazha.org/install | bash -s -- --uninstall"
 }
 
@@ -212,6 +284,17 @@ do_uninstall() {
             sudo rm -f /etc/systemd/system/mobazha.service
             sudo systemctl daemon-reload
         fi
+        # Also check user-level systemd
+        if systemctl --user is-active --quiet mobazha 2>/dev/null; then
+            systemctl --user stop mobazha
+        fi
+        if systemctl --user is-enabled --quiet mobazha 2>/dev/null; then
+            systemctl --user disable mobazha
+            local user_unit
+            user_unit="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/mobazha.service"
+            rm -f "$user_unit"
+            systemctl --user daemon-reload
+        fi
     elif [[ "$(uname -s)" == "Darwin" ]]; then
         local plist="$HOME/Library/LaunchAgents/org.mobazha.node.plist"
         if [ -f "$plist" ]; then
@@ -224,7 +307,7 @@ do_uninstall() {
     # Remove binaries (check both new and legacy install dirs)
     local found=false
     for dir in "$INSTALL_DIR" "/usr/local/bin"; do
-        for name in "${BINARY_NAME}" "${BINARY_NAME}-tray"; do
+        for name in "${BINARY_NAME}" "${BINARY_NAME}-launcher" "${BINARY_NAME}-tray"; do
             local binary="${dir}/${name}"
             if [ -f "$binary" ]; then
                 echo "   Removing ${binary}..."
@@ -272,6 +355,7 @@ UNINSTALL:
 OPTIONS:
   --version <tag>   Install a specific version (e.g. v0.1.0)
   --dir <path>      Install directory (default: ~/.local/bin)
+  --no-start        Don't register/start the background service after install
   --uninstall       Remove Mobazha binary and system service
   --purge           Also remove data directory (use with --uninstall)
   --help            Show this help message
