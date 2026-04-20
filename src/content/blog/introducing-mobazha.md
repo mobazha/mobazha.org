@@ -19,8 +19,8 @@ We believe sellers deserve better.
 ## What you can do today
 
 - **Create your store** in 30 seconds — no credit card required
-- **Accept payments** — USDT & USDC on multiple chains (including TRON), plus ETH, BNB, SOL, BTC, LTC, ZEC, and Stripe/PayPal
-- **Built-in buyer protection** through smart contract escrow on every order
+- **Accept payments** — BTC, BCH, LTC, ZEC, and Stripe/PayPal — with more coming soon
+- **Built-in buyer protection** with crypto escrow on every order
 - **Sell in Telegram** — your store as a Mini App, reaching customers where they already are
 - **Keep 100%** of your revenue — zero commissions
 
