@@ -57,7 +57,7 @@ No account. No signup. No wallet connection. No extension.
 **What this gives you:**
 
 - Buyers who never heard of "non-custodial" can now pay in crypto
-- No email, no phone number, no KYC on the buyer side
+- No email, no phone number — privacy-first for buyers
 - Each order gets its own payment address, derived on-node with no reuse
 - Funds sweep to your main wallet automatically after confirmation
 
