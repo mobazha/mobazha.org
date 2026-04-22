@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy - Mobazha" description="Mobazha Privacy Policy. How we handle your data with privacy as a core principle.">
+  <Header />
+  <main class="pt-32 pb-20">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <h1 class="text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)]">Privacy Policy</h1>
+      <p class="mt-4 text-sm text-[var(--color-text-muted)]">Last updated: April 2026</p>
+
+      <div class="mt-10 space-y-8 text-[var(--color-text-body)] leading-relaxed">
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">Our Privacy Commitment</h2>
+          <p class="mt-3">
+            Mobazha is built with privacy as a core principle. We collect only the minimum data necessary to provide the Service. We do not sell, trade, or share your personal data with third parties for advertising purposes.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">1. Data We Collect</h2>
+          <h3 class="mt-4 font-semibold text-[var(--color-text-primary)]">SaaS (Hosted) Users</h3>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Account information: email address or platform login (Telegram, etc.)</li>
+            <li>Store data: product listings, orders, and store settings you create</li>
+            <li>Basic usage analytics to improve the platform</li>
+          </ul>
+          <h3 class="mt-4 font-semibold text-[var(--color-text-primary)]">Self-Hosted Users</h3>
+          <p class="mt-2">
+            When you self-host Mobazha, all data stays on your own server. We do not have access to your store data, customer information, or transaction history. The only connection is optional peer-to-peer network participation for store discovery.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">2. How We Use Your Data</h2>
+          <ul class="mt-3 ml-6 list-disc space-y-1">
+            <li>To provide and maintain the Service</li>
+            <li>To process transactions and provide customer support</li>
+            <li>To improve the platform based on aggregated, anonymized usage patterns</li>
+            <li>To communicate important updates about the Service</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">3. Data Sharing</h2>
+          <p class="mt-3">
+            We do not sell your personal data. We may share data only in the following cases:
+          </p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>With payment processors (Stripe, PayPal) to process fiat transactions</li>
+            <li>When required by law or valid legal process</li>
+            <li>To protect the rights, safety, or property of Mobazha or its users</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">4. Data Security</h2>
+          <p class="mt-3">
+            We use industry-standard security measures including encryption in transit (TLS) and at rest. Buyer-seller chat is end-to-end encrypted using the Matrix protocol. Cryptocurrency transactions are secured through blockchain-based escrow.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">5. Data Export and Deletion</h2>
+          <p class="mt-3">
+            You can export all your store data at any time. You may request deletion of your account and associated data by contacting us. Data will be removed within 30 days of a verified request.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">6. Cookies</h2>
+          <p class="mt-3">
+            The Mobazha website uses only essential cookies required for the Service to function (session management, authentication). We do not use tracking or advertising cookies.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">7. Changes to This Policy</h2>
+          <p class="mt-3">
+            We may update this Privacy Policy from time to time. Material changes will be communicated via the platform. Continued use of the Service after changes constitutes acceptance.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">8. Contact</h2>
+          <p class="mt-3">
+            For privacy-related questions, contact us at <a href="mailto:hello@mobazha.org" class="text-[var(--color-brand-light)] hover:underline">hello@mobazha.org</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

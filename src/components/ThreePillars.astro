@@ -1,0 +1,78 @@
+---
+const pillars = [
+  {
+    key: 'privacy',
+    eyebrow: 'Privacy',
+    title: 'Your data, your server',
+    iconColor: 'text-[#6ee7b7]',
+    iconBg: 'bg-[#10b981]/10',
+    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>`,
+    points: [
+      'Self-host on any server',
+      'Optional Tor / Lokinet overlay',
+      'End-to-end encrypted chat',
+    ],
+  },
+  {
+    key: 'crypto',
+    eyebrow: 'Crypto',
+    title: 'Crypto-native commerce',
+    iconColor: 'text-[var(--color-brand-light)]',
+    iconBg: 'bg-[var(--color-brand)]/10',
+    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+    points: [
+      '0% commission on crypto sales',
+      'No chargebacks, on-chain final',
+      'BTC · BCH · LTC · ZEC & more',
+    ],
+  },
+  {
+    key: 'ai',
+    eyebrow: 'AI',
+    title: 'AI runs your store',
+    iconColor: 'text-[#c084fc]',
+    iconBg: 'bg-[#a855f7]/10',
+    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>`,
+    points: [
+      'Photo → listing in 60 seconds',
+      'AI Storefront designer',
+      'Open Skills SDK for AI agents',
+    ],
+  },
+];
+---
+
+<section id="features" class="relative py-16 sm:py-20">
+  <div class="relative mx-auto max-w-6xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+        Three pillars. <span class="bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">One platform.</span>
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-5 lg:grid-cols-3">
+      {pillars.map(pillar => (
+        <div class="group rounded-2xl border border-white/5 bg-[var(--color-bg-surface)] p-7">
+          <div class="flex items-center gap-3">
+            <div class={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${pillar.iconBg} ${pillar.iconColor}`}>
+              <Fragment set:html={pillar.icon} />
+            </div>
+            <div>
+              <div class={`text-[10px] font-bold uppercase tracking-[0.14em] ${pillar.iconColor}`}>{pillar.eyebrow}</div>
+              <h3 class="text-base font-semibold text-[var(--color-text-primary)]">{pillar.title}</h3>
+            </div>
+          </div>
+
+          <ul class="mt-5 space-y-2.5">
+            {pillar.points.map(point => (
+              <li class="flex items-start gap-2 text-sm text-[var(--color-text-muted)]">
+                <svg class={`mt-0.5 h-3.5 w-3.5 shrink-0 ${pillar.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
