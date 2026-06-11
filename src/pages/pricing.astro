@@ -2,8 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { filterPricingFeatures } from '../config/paymentVisibility';
 
-const plans = [
+const basePlans = [
   {
     name: 'Free',
     price: '$0',
@@ -86,6 +87,11 @@ const plans = [
     comingSoon: true,
   },
 ];
+
+const plans = basePlans.map(plan => ({
+  ...plan,
+  features: filterPricingFeatures(plan.features),
+}));
 ---
 
 <Layout title="Pricing - Mobazha" description="Simple, transparent pricing. All features free during Beta.">

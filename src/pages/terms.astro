@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getTermsProcessorFeeSentence } from '../config/paymentVisibility';
+
+const processorFeeSentence = getTermsProcessorFeeSentence();
 ---
 
 <Layout title="Terms of Service - Mobazha" description="Mobazha Terms of Service. Read our terms for using the platform.">
@@ -48,7 +51,7 @@ import Footer from '../components/Footer.astro';
         <section>
           <h2 class="text-xl font-semibold text-[var(--color-text-primary)]">5. Payments and Fees</h2>
           <p class="mt-3">
-            Mobazha charges zero commissions on sales. During the Beta period, all features are free. When paid plans are introduced, pricing changes will be communicated at least 30 days in advance. Third-party payment processors (Stripe, PayPal) may charge their own fees.
+            Mobazha charges zero commissions on sales. During the Beta period, all features are free. When paid plans are introduced, pricing changes will be communicated at least 30 days in advance.{processorFeeSentence ? ` ${processorFeeSentence}` : ''}
           </p>
         </section>
 

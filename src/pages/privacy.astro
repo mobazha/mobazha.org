@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { isFiatPaymentVisible } from '../config/paymentVisibility';
+
+const showFiatProcessors = isFiatPaymentVisible();
 ---
 
 <Layout title="Privacy Policy - Mobazha" description="Mobazha Privacy Policy. How we handle your data with privacy as a core principle.">
@@ -49,7 +52,9 @@ import Footer from '../components/Footer.astro';
             We do not sell your personal data. We may share data only in the following cases:
           </p>
           <ul class="mt-2 ml-6 list-disc space-y-1">
-            <li>With payment processors (Stripe, PayPal) to process fiat transactions</li>
+            {showFiatProcessors && (
+              <li>With payment processors (Stripe, PayPal) to process fiat transactions</li>
+            )}
             <li>When required by law or valid legal process</li>
             <li>To protect the rights, safety, or property of Mobazha or its users</li>
           </ul>

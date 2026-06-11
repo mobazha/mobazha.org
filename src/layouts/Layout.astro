@@ -1,15 +1,13 @@
 ---
 import '../styles/global.css';
+import { getDefaultSiteDescription } from '../config/paymentVisibility';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const {
-  title,
-  description = 'Create your own store in 30 seconds. Accept USDT & USDC on multiple chains (incl. TRON), plus crypto & fiat. Zero commissions. Your data, your rules.',
-} = Astro.props;
+const { title, description = getDefaultSiteDescription() } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, 'https://mobazha.org').href;
 const ogImage = new URL('/images/og-cover.png', 'https://mobazha.org').href;
