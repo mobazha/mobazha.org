@@ -15,7 +15,8 @@ export function isTronPaymentVisible(): boolean {
   return PAYMENT_METHOD_VISIBILITY.tron;
 }
 
-const CRYPTO_PAYMENTS_BASE = 'BTC · BCH · LTC · ZEC · ETH · SOL · USDT/USDC';
+const CRYPTO_PAYMENTS_BASE =
+  'BTC · BCH · LTC · ZEC · ETH · BSC · Base · Polygon · Arbitrum · SOL · USDT/USDC';
 
 export function getSellerComparisonCryptoLabel(): string {
   if (isFiatPaymentVisible()) {
