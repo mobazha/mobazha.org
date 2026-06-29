@@ -93,7 +93,7 @@ Full installation instructions for all platforms (including Gemini CLI and GitHu
 | **Storefront CRO** | Conversion rate optimization audit |
 | **Product Image Prompt** | AI image generation prompts for products |
 
-## Open source, free forever
+## Open source under the MIT License
 
 Mobazha Skills is MIT-licensed and completely free. It's built by the Mobazha team and open to contributions.
 

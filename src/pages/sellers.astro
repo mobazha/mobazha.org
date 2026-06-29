@@ -15,18 +15,18 @@ const cryptoRequiredFaqAnswer = getCryptoRequiredFaqAnswer();
 const benefits = [
   {
     icon: `<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
-    title: 'Keep 100% of your revenue',
-    description: 'Zero commissions on every sale. No listing fees. No payment processing cut on crypto. Sell $1,000 and keep $1,000.',
+    title: 'Protect your margin',
+    description: 'Independent Community operation has no mandatory central Mobazha transaction fee. Managed services, network costs, and third-party fees are disclosed separately.',
   },
   {
     icon: `<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>`,
-    title: 'No chargebacks, ever',
-    description: 'Crypto payments settle final on-chain. No buyer can reverse the transaction after delivery. No surprise fund holds from your payment processor.',
+    title: 'Understand settlement risk',
+    description: 'On-chain settlement does not use the card chargeback mechanism, but refunds, disputes, fraud, and compliance risk still exist. Each order follows explicit settlement terms.',
   },
   {
     icon: `<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" /></svg>`,
-    title: 'No platform risk',
-    description: 'No arbitrary suspensions. No algorithm changes tanking your sales. No surprise policy updates. You cannot be deplatformed because the platform is yours.',
+    title: 'Reduce platform dependency',
+    description: 'Export your data or run Community software on infrastructure you control. Hosted services and public networks still have policies, availability limits, and legal obligations.',
   },
   {
     icon: `<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" /></svg>`,
@@ -54,7 +54,7 @@ const personas = [
   {
     emoji: '📚',
     title: 'Digital creators',
-    description: 'Selling ebooks, courses, software, or digital art. Instant settlement, no chargebacks, global reach.',
+    description: 'Sell ebooks, courses, software, or digital art with clear delivery, settlement, refund, and dispute terms.',
   },
   {
     emoji: '🎨',
@@ -64,12 +64,12 @@ const personas = [
   {
     emoji: '🛡',
     title: 'Privacy-conscious merchants',
-    description: 'You value pseudonymity and control. Self-host with Tor or Lokinet overlay. No KYC to accept crypto.',
+    description: 'You value privacy and control. Self-host with an optional privacy overlay while still following applicable payment, tax, and legal requirements.',
   },
 ];
 ---
 
-<Layout title="For Sellers - Mobazha" description="Keep 100% of your revenue. No chargebacks. No platform risk. Built for independent sellers who want full control over their business.">
+<Layout title="For Sellers - Mobazha" description="Open commerce tools for independent sellers who want portable data, flexible deployment, and fees disclosed before use.">
   <Header />
   <main class="pt-32 pb-20">
     <!-- Hero -->
@@ -79,13 +79,13 @@ const personas = [
       </div>
       <div class="relative">
         <h1 class="text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
-          Keep every dollar you earn.<br />
+          Keep control of your business.<br />
           <span class="bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">
             On your terms.
           </span>
         </h1>
         <p class="mx-auto mt-6 max-w-2xl text-lg text-[var(--color-text-body)]">
-          Zero commissions. No chargebacks. No platform risk. Mobazha is the commerce platform for independent sellers who refuse to give up a cut of every sale.
+          Own your customer relationship, choose how you deploy, and see applicable service and network costs before confirming a transaction.
         </p>
       </div>
     </div>
@@ -97,7 +97,7 @@ const personas = [
           How Mobazha compares
         </h2>
         <p class="mt-3 text-[var(--color-text-body)]">
-          Zero commissions. Full data ownership. No platform risk.
+          Portable data, flexible deployment, and transparent service boundaries.
         </p>
       </div>
 
@@ -114,22 +114,22 @@ const personas = [
           </thead>
           <tbody class="text-[var(--color-text-body)]">
             <tr class="border-b border-white/5">
-              <td class="py-3 pl-6 pr-6 text-[var(--color-text-muted)]">Commission</td>
-              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">0%</td>
-              <td class="py-3 pr-6">0.5&ndash;2%</td>
-              <td class="py-3 pr-6">6.5%</td>
-              <td class="py-3 pr-6">8&ndash;15%</td>
+              <td class="py-3 pl-6 pr-6 text-[var(--color-text-muted)]">Platform and service fees</td>
+              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">Separated by service</td>
+              <td class="py-3 pr-6">Varies by plan</td>
+              <td class="py-3 pr-6">Varies by category</td>
+              <td class="py-3 pr-6">Varies by category</td>
             </tr>
             <tr class="border-b border-white/5">
               <td class="py-3 pl-6 pr-6 text-[var(--color-text-muted)]">Chargeback risk</td>
-              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">None (on-chain final)</td>
+              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">Payment-dependent</td>
               <td class="py-3 pr-6">Yes</td>
               <td class="py-3 pr-6">Yes</td>
               <td class="py-3 pr-6">Yes</td>
             </tr>
             <tr class="border-b border-white/5">
               <td class="py-3 pl-6 pr-6 text-[var(--color-text-muted)]">Data ownership</td>
-              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">100% yours</td>
+              <td class="py-3 pr-6 font-semibold text-[var(--color-brand-light)]">Exportable / self-hostable</td>
               <td class="py-3 pr-6">Platform-hosted</td>
               <td class="py-3 pr-6">Platform-owned</td>
               <td class="py-3 pr-6">Platform-owned</td>
@@ -291,7 +291,7 @@ const personas = [
             <svg class="h-4 w-4 shrink-0 text-[var(--color-text-muted)] transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
           </summary>
           <div class="border-t border-white/5 px-6 py-4 text-sm text-[var(--color-text-body)]">
-            Crypto orders use 2-of-3 multisig escrow. If both sides agree, funds release instantly. If there's a disagreement, a neutral moderator reviews evidence — this is fundamentally fairer than a credit card chargeback, where the bank can reverse funds months later without your input.
+            Supported escrow orders follow the payment method and order terms shown at checkout. A dispute may require evidence and human review. On-chain settlement avoids the card chargeback mechanism, but it does not eliminate refunds, fraud, operational mistakes, or legal obligations.
           </div>
         </details>
         <details class="group rounded-xl border border-white/5 bg-[var(--color-bg-surface)]">
@@ -310,7 +310,7 @@ const personas = [
             <svg class="h-4 w-4 shrink-0 text-[var(--color-text-muted)] transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
           </summary>
           <div class="border-t border-white/5 px-6 py-4 text-sm text-[var(--color-text-body)]">
-            During Beta all features are free — no credit card, no limits, no tricks. After Beta, the free tier stays free with generous limits. We'll monetize through optional features (custom domains, advanced AI, multiple stores). <strong>Commissions remain 0% on every plan, forever.</strong> Pricing will be announced 30+ days in advance.
+            Mobazha Cloud currently has no subscription charge during Beta. That is a current Beta policy, not a permanent promise. Independent Community operation has no mandatory central Mobazha transaction fee; servers, networks, third parties, and optional managed services can still cost money. See <a class="text-[var(--color-brand-light)] hover:underline" href="/fees">Fees and Paid Services</a>.
           </div>
         </details>
       </div>
@@ -322,7 +322,7 @@ const personas = [
         Start selling on your terms
       </h2>
       <p class="mt-4 text-lg text-[var(--color-text-body)]">
-        Create your store in 30 seconds. All features free during Beta.
+        Start with the current Cloud Beta or run the Community software yourself. Review fees and operating costs before choosing services.
       </p>
       <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <a

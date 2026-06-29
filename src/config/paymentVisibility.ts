@@ -27,22 +27,22 @@ export function getSellerComparisonCryptoLabel(): string {
 
 export function getCryptoPaymentsFootnote(): string {
   if (isFiatPaymentVisible()) {
-    return 'Crypto payments settle with zero platform fees. Fiat payments still incur third-party processor fees (Stripe / PayPal).';
+    return 'Available payment methods and any Mobazha, network, or third-party fees are shown before confirmation.';
   }
-  return 'Crypto payments settle with zero platform fees on Mobazha.';
+  return 'Network costs and any optional managed-service fees are separate and should be shown before confirmation.';
 }
 
 export function getDefaultSiteDescription(): string {
   if (isFiatPaymentVisible() && isTronPaymentVisible()) {
-    return 'Create your own store in 30 seconds. Accept USDT & USDC on multiple chains (incl. TRON), plus crypto & fiat. Zero commissions. Your data, your rules.';
+    return 'Create your own store in 30 seconds. Accept supported crypto and fiat payments. Self-host or choose managed services on clear terms.';
   }
   if (isFiatPaymentVisible()) {
-    return 'Create your own store in 30 seconds. Accept USDT & USDC on multiple chains, plus crypto & fiat. Zero commissions. Your data, your rules.';
+    return 'Create your own store in 30 seconds. Accept supported crypto and fiat payments. Self-host or choose managed services on clear terms.';
   }
   if (isTronPaymentVisible()) {
-    return 'Create your own store in 30 seconds. Accept USDT & USDC on multiple chains (incl. TRON), plus native crypto. Zero commissions. Your data, your rules.';
+    return 'Create your own store in 30 seconds. Accept supported crypto payments. Self-host or choose managed services on clear terms.';
   }
-  return 'Create your own store in 30 seconds. Accept USDT & USDC on multiple chains, plus native crypto. Zero commissions. Your data, your rules.';
+  return 'Create your own store in 30 seconds. Accept supported crypto payments. Self-host or choose managed services on clear terms.';
 }
 
 export function getTrustBarPaymentItem(): { label: string; labelShort: string } {
@@ -58,18 +58,11 @@ export function getTrustBarPaymentItem(): { label: string; labelShort: string } 
   };
 }
 
-export function filterPricingFeatures(features: string[]): string[] {
-  if (isFiatPaymentVisible()) return features;
-  return features
-    .filter(f => !/stripe|paypal|fiat payments/i.test(f))
-    .map(f => (f === 'All payment channels' ? 'All supported crypto chains' : f));
-}
-
 export function getCryptoRequiredFaqAnswer(): string {
   if (isFiatPaymentVisible()) {
-    return "No. You can sell with Stripe or PayPal alone (paid plans). But crypto is where the zero-commission advantage is largest — and it's always available on the free tier. Most sellers enable both.";
+    return 'No. When fiat methods are available, sellers can choose the payment methods that fit their customers. Payment-provider, network, and optional Mobazha service fees are disclosed separately.';
   }
-  return "Crypto is the primary checkout path today — zero platform fees and no chargebacks. Connect your receiving addresses in Admin → Payments and you're ready to sell.";
+  return 'Crypto is the primary checkout path today. Connect a supported receiving method in Admin → Payments, and review network, settlement, refund, and dispute terms for each order.';
 }
 
 export function getTermsProcessorFeeSentence(): string {
