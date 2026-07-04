@@ -2,6 +2,10 @@
 
 Brand website for [Mobazha](https://mobazha.org) — a decentralized commerce platform for independent sellers.
 
+Task guides, self-hosting instructions, developer references, and public
+project knowledge are published separately at
+[docs.mobazha.org](https://docs.mobazha.org).
+
 ## Tech Stack
 
 - [Astro](https://astro.build/) v6 — Static Site Generator
