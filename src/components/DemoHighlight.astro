@@ -1,0 +1,61 @@
+---
+const videoSrc =
+  'https://media.mobazha.org/demos/0001-operator-commission-flywheel/operator-commission-flywheel-cut45-v9.mp4';
+const posterSrc =
+  'https://media.mobazha.org/demos/0001-operator-commission-flywheel/cut45-poster-v9.jpg';
+const fullStoryHref =
+  'https://docs.mobazha.org/demos/operator-commission-flywheel';
+---
+
+<section class="relative overflow-hidden py-16 sm:py-20" aria-labelledby="demo-highlight-heading">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+    <div class="absolute top-1/2 left-1/2 h-[420px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--color-brand)] opacity-[0.05] blur-[100px]"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-5xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-xs font-medium tracking-[0.18em] text-[var(--color-brand-light)] uppercase">
+        Community marketplace
+      </p>
+      <h2
+        id="demo-highlight-heading"
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+      >
+        Turn your community into a market that pays you
+      </h2>
+      <p class="mt-4 text-base leading-relaxed text-[var(--color-text-body)] sm:text-lg">
+        Publish a branded market, carry one real order through, and see the same
+        order attributed with an estimated operator share.
+      </p>
+    </div>
+
+    <div class="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+      <video
+        class="aspect-video w-full bg-black"
+        controls
+        playsinline
+        preload="metadata"
+        poster={posterSrc}
+        aria-label="Community marketplace demo: from live market to attributed commission"
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="mt-5 flex flex-col items-center justify-between gap-3 sm:flex-row">
+      <p class="text-sm text-[var(--color-text-muted)]">
+        36s highlight · local test network · estimated commission, not a withdrawable balance
+      </p>
+      <a
+        href={fullStoryHref}
+        class="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-brand-light)] transition-colors hover:text-white"
+      >
+        Watch the full story
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
