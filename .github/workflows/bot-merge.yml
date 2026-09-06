@@ -1,0 +1,66 @@
+name: Merge PR as Mobazha bot
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number
+        required: true
+        type: string
+      expected_sha:
+        description: Full head commit SHA you reviewed
+        required: true
+        type: string
+      dry_run:
+        description: Validate credentials and PR without merging
+        default: true
+        type: boolean
+
+permissions: {}
+
+concurrency:
+  group: bot-merge-${{ inputs.pr_number }}
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create repository-scoped bot token
+        id: token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+        with:
+          client-id: ${{ vars.MERGE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MERGE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: read
+
+      - name: Validate and merge the reviewed commit
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          BOT_SLUG: ${{ steps.token.outputs.app-slug }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo 'Invalid PR number'; exit 1; }
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo 'Expected a full commit SHA'; exit 1; }
+          pr=$(gh api "repos/$GH_REPO/pulls/$PR_NUMBER")
+          jq -e --arg sha "$EXPECTED_SHA" \
+            '.state == "open" and .draft == false and .base.ref == "main" and .head.sha == $sha' \
+            <<< "$pr" > /dev/null
+          echo "Authenticated installation: $BOT_SLUG[bot]"
+          if [[ "$DRY_RUN" == 'true' ]]; then
+            echo 'Credentials and PR validated. No merge requested; mergeability and branch rules are enforced at actual merge time.'
+            exit 0
+          fi
+          result=$(gh api --method PUT "repos/$GH_REPO/pulls/$PR_NUMBER/merge" \
+            -f sha="$EXPECTED_SHA" -f merge_method=merge)
+          jq -e '.merged == true' <<< "$result" > /dev/null
+          gh api "repos/$GH_REPO/pulls/$PR_NUMBER" \
+            --jq '{merged, merged_by: .merged_by.login, merge_commit_sha}'
